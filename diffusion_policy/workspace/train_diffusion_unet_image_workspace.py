@@ -151,7 +151,7 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
         # training loop
         log_path = os.path.join(self.output_dir, 'logs.json.txt')
         with JsonLogger(log_path) as json_logger:
-            for local_epoch_idx in range(cfg.training.num_epochs):
+            for local_epoch_idx in tqdm.tqdm(range(cfg.training.num_epochs)):
                 step_log = dict()
                 # ========= train for this epoch ==========
                 if cfg.training.freeze_encoder:
@@ -261,6 +261,7 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
                 # checkpoint
                 if (self.epoch % cfg.training.checkpoint_every) == 0:
                     # checkpointing
+                    self.save_checkpoint(tag=f"{self.epoch}")
                     if cfg.checkpoint.save_last_ckpt:
                         self.save_checkpoint()
                     if cfg.checkpoint.save_last_snapshot:
