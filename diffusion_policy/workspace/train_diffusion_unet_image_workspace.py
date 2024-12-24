@@ -104,13 +104,14 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
                 model=self.ema_model)
 
         # configure env
-        env_runner: BaseImageRunner
-        env_runner = hydra.utils.instantiate(
-            cfg.task.env_runner,
-            output_dir=self.output_dir)
-        assert isinstance(env_runner, BaseImageRunner)
+        # env_runner: BaseImageRunner
+        # env_runner = hydra.utils.instantiate(
+        #     cfg.task.env_runner,
+        #     output_dir=self.output_dir)
+        # assert isinstance(env_runner, BaseImageRunner)
 
         # configure logging
+        wandb.login(key="f3ff179b6f827f5e96753a72451d069bd58bd413")
         wandb_run = wandb.init(
             dir=str(self.output_dir),
             config=OmegaConf.to_container(cfg, resolve=True),
@@ -215,10 +216,10 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
                 policy.eval()
 
                 # run rollout
-                if (self.epoch % cfg.training.rollout_every) == 0:
-                    runner_log = env_runner.run(policy)
-                    # log all
-                    step_log.update(runner_log)
+                # if (self.epoch % cfg.training.rollout_every) == 0:
+                #     runner_log = env_runner.run(policy)
+                #     # log all
+                #     step_log.update(runner_log)
 
                 # run validation
                 if (self.epoch % cfg.training.val_every) == 0:

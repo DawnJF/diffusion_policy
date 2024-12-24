@@ -1,0 +1,36 @@
+name: box
+
+shape_meta: &shape_meta
+  # acceptable types: rgb, low_dim
+  obs:
+    image:
+      shape: [3, 512, 512]
+      type: rgb
+      horizon: 1
+    wrist_image:
+      shape: [3, 512, 512]
+      type: rgb
+      horizon: 1
+    # scene_img:
+    #   shape: [3, 512, 512]
+    #   type: rgb
+    agent_pos:
+      shape: [8]
+      type: low_dim
+      horizon: 1
+  action:
+    shape: [8]
+    horizon: 16
+
+
+dataset:
+  _target_: diffusion_policy.dataset.gr1_dex_dataset_image.GR1DexDatasetImage
+  dataset_path: data/box_zarr
+  horizon: ${horizon}
+  pad_before: ${eval:'${n_obs_steps}-1'}
+  pad_after: ${eval:'${n_action_steps}-1'}
+  seed: 42
+  val_ratio: 0.00
+  max_train_episodes: 90
+  use_img: true
+  use_depth: false

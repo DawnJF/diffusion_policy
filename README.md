@@ -1,3 +1,21 @@
+debug:
+Python: train old dataset
+
+key code:
+
+config/task/dp_dex.yaml
+config/train_diffusion_unet_real_image_workspace.yaml
+
+workspace/train_diffusion_unet_image_workspace.py
+dataset/gr1_dex_dataset_image.py
+
+policy/diffusion_unet_image_policy.py
+vision/multi_image_obs_encoder.py
+
+train example:
+python train.py --config-name=train_diffusion_unet_real_image_workspace task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/1219
+
+
 # Diffusion Policy
 
 [[Project page]](https://diffusion-policy.cs.columbia.edu/)

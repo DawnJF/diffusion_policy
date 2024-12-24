@@ -13,14 +13,25 @@
         },
         // (robodiff)[diffusion_policy]$ python train.py --config-name=train_diffusion_unet_real_image_workspace task.dataset_path=data/demo_pusht_real
         {
-            "name": "Python: Current File",
+            "name": "Python: train",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/train.py",
             "console": "integratedTerminal",
             "args": [
                 "--config-name=train_diffusion_unet_real_image_workspace",
-                "task.dataset_path=data/demo_pusht_real"
+                "task.dataset_path=/storage/liujinxin/code/diffusion_policy/data/pusht"
+            ]
+        },
+        {
+            "name": "Python: train old dataset",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/train.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--config-name=train_diffusion_unet_real_image_workspace",
+                "task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/1219"
             ]
         }
     ]
