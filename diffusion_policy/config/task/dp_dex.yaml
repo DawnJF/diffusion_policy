@@ -4,11 +4,11 @@ shape_meta: &shape_meta
   # acceptable types: rgb, low_dim
   obs:
     image:
-      shape: [3, 512, 512]
+      shape: [3, 240, 240]
       type: rgb
       horizon: 1
     wrist_image:
-      shape: [3, 512, 512]
+      shape: [3, 240, 240]
       type: rgb
       horizon: 1
     # scene_img:

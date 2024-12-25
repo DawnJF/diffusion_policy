@@ -1,19 +1,27 @@
-debug:
+### debug
 Python: train old dataset
 
-key code:
+### key code
 
 config/task/dp_dex.yaml
+
 config/train_diffusion_unet_real_image_workspace.yaml
 
 workspace/train_diffusion_unet_image_workspace.py
+
 dataset/gr1_dex_dataset_image.py
 
 policy/diffusion_unet_image_policy.py
+
 vision/multi_image_obs_encoder.py
 
-train example:
-python train.py --config-name=train_diffusion_unet_real_image_workspace task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/1219
+### train example
+python train.py --config-name=train_diffusion_unet_real_image_workspace task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_1224
+
+### deploy
+UR_Robot_Arm_Show 脚本全都打开，在 UR_Robot_Arm_Show 环境中运行：deploy_platform.py
+
+python xx/xx/xx/deploy_platform.py
 
 
 # Diffusion Policy
