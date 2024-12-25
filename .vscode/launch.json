@@ -33,6 +33,15 @@
                 "--config-name=train_diffusion_unet_real_image_workspace",
                 "task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/1219"
             ]
+        },
+        {
+            "name": "deploy_platform（need init_env）",
+            "type": "debugpy",
+            "request": "launch",
+            "cwd": "/home/robot/UR_Robot_Arm_Show/tele_ws",
+            "program": "${workspaceFolder}/deploy_platform.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
         }
     ]
 }
