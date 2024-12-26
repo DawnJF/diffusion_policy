@@ -133,7 +133,7 @@ checkpoint:
   topk:
     monitor_key: train_loss
     mode: min
-    k: 5
+    k: 15
     format_str: 'epoch={epoch:04d}-train_loss={train_loss:.3f}.ckpt'
   save_last_ckpt: True
   save_last_snapshot: False
