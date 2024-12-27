@@ -88,9 +88,7 @@ class Inference:
         if len(obs_list) < self.obs_horizon:
             env_obs = [obs_list[0]] * self.obs_horizon
         else:
-            env_obs = obs_list[-self.obs_horizon :]  # FIXME
-        # for k, v in env_obs.items():
-        #     print(f"{k} : {v.shape}")
+            env_obs = obs_list[-self.obs_horizon :]
 
         wrist_image_list = []
         rgb_image_list = []
@@ -135,12 +133,12 @@ class Inference:
     def run(self, policy):
         step_count = 0
 
+        obs = self.get_obs_dict()
+        self.obs_list.append(obs)
+        print(obs.keys())
+
         while step_count < 1000:
             with torch.no_grad():
-
-                obs = self.get_obs_dict()
-                print(obs.keys())
-                self.obs_list.append(obs)
 
                 model_input = self.construct_obs(self.obs_list)
 
@@ -151,6 +149,9 @@ class Inference:
             for action in actions:
                 self.step_one(action)
                 time.sleep(0.1)
+
+                obs = self.get_obs_dict()
+                self.obs_list.append(obs)
                 step_count += 1
 
             print(f"step: {step_count}")
