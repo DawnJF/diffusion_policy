@@ -53,17 +53,17 @@ class Inference:
             "rgb": {
                 "size": (960, 540),
                 "crop": (230, 0, 770, 540),
-                "resize": (512, 512),
+                "resize": (240, 240),
             },
             "wrist": {
                 "size": (640, 480),
                 "crop": (0, 0, 640, 480),
-                "resize": (512, 512),
+                "resize": (240, 240),
             },
             "scene": {
                 "size": (640, 480),
                 "crop": (100, 160, 540, 480),
-                "resize": (512, 512),
+                "resize": (240, 240),
             },
         }
 
@@ -124,7 +124,8 @@ class Inference:
         return data
 
     def filter_actions(self, actions):
-        return actions["action"].detach().cpu().numpy()[0]
+        return actions["action"].detach().cpu().numpy()[0][3::2]
+        # return actions["action"].detach().cpu().numpy()[0]
 
     def step_one(self, action):
         print("step: ", action.shape)
@@ -145,7 +146,7 @@ class Inference:
                 actions = policy.predict_action(model_input)
 
             actions = self.filter_actions(actions)
-
+            print(f"actions: {actions.shape}")
             for action in actions:
                 self.step_one(action)
                 time.sleep(0.1)
@@ -160,7 +161,7 @@ class Inference:
 def main(ckpt_path):
 
     # load checkpoint
-
+    print(f"load: {ckpt_path}")
     payload = torch.load(open(ckpt_path, "rb"), pickle_module=dill)
     cfg = payload["cfg"]
     cls = hydra.utils.get_class(cfg._target_)
@@ -213,7 +214,5 @@ def test():
 
 
 if __name__ == "__main__":
-    main(
-        "/media/robot/30F73268F87D0FEF/Checkpoints/dp/checkpoints/epoch=0150-train_loss=0.016.ckpt"
-    )
+    main("/media/robot/30F73268F87D0FEF/Checkpoints/dp/dp_240_checkpoints/150.ckpt")
     # test()
