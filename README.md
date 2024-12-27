@@ -16,7 +16,9 @@ policy/diffusion_unet_image_policy.py
 vision/multi_image_obs_encoder.py
 
 ### train example
-python train.py --config-name=train_diffusion_unet_real_image_workspace task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_1224
+python train.py --config-name=train_diffusion_unet_real_image_workspace tag=cube2bowl task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_random_1224+26
+
+python train.py --config-name=train_diffusion_unet_real_image_workspace tag=bowl task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_1226_bowl
 
 ### deploy
 UR_Robot_Arm_Show 脚本全都打开，在 UR_Robot_Arm_Show 环境中运行：deploy_platform.py
