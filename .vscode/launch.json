@@ -31,7 +31,7 @@
             "console": "integratedTerminal",
             "args": [
                 "--config-name=train_diffusion_unet_real_image_workspace",
-                "task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/1219"
+                "task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_1226_bowl"
             ]
         },
         {

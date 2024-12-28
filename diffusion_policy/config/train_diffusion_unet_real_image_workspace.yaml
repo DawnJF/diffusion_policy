@@ -3,7 +3,7 @@ defaults:
   - task: dp_dex
 
 tag: dp
-name: train_${dp}
+name: train_${tag}
 _target_: diffusion_policy.workspace.train_diffusion_unet_image_workspace.TrainDiffusionUnetImageWorkspace
 
 task_name: ${task.name}
@@ -122,7 +122,7 @@ training:
   tqdm_interval_sec: 1.0
 
 logging:
-  project: diffusion_policy_${tag}
+  project: diffusion_policy
   resume: True
   mode: online
   name: ${now:%Y.%m.%d-%H.%M.%S}_${name}_${task_name}

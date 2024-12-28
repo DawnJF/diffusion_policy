@@ -27,6 +27,7 @@ class MultiImageObsEncoder(ModuleAttrMixin):
         Assumes rgb input: B,C,H,W
         Assumes low_dim input: B,D
         """
+        print(f"==== resize:{resize_shape} crop:{crop_shape} ====")
         super().__init__()
 
         rgb_keys = list()
