@@ -1,4 +1,4 @@
-name: box
+name: dex
 
 shape_meta: &shape_meta
   # acceptable types: rgb, low_dim

@@ -2,11 +2,11 @@ defaults:
   - _self_
   - task: dp_dex
 
-tag: dp
-name: train_${tag}
+name: dp
+tag: exp
 _target_: diffusion_policy.workspace.train_diffusion_unet_image_workspace.TrainDiffusionUnetImageWorkspace
 
-task_name: ${task.name}
+task_name: ${task.name}_${tag}
 shape_meta: ${task.shape_meta}
 exp_name: "default"
 
@@ -140,14 +140,14 @@ checkpoint:
   save_last_snapshot: False
 
 multi_run:
-  run_dir: data/outputs/${tag}_${now:%Y.%m.%d}/${now:%H.%M.%S}_${name}_${task_name}
+  run_dir: data/outputs/${name}_${now:%Y.%m.%d}/${task_name}_${now:%H.%M.%S}
   wandb_name_base: ${now:%Y.%m.%d-%H.%M.%S}_${name}_${task_name}
 
 hydra:
   job:
     override_dirname: ${name}
   run:
-    dir: data/outputs/${tag}_${now:%Y.%m.%d}/${now:%H.%M.%S}_${name}_${task_name}
+    dir: data/outputs/${name}_${now:%Y.%m.%d}/${task_name}_${now:%H.%M.%S}
   sweep:
-    dir: data/outputs/${tag}_${now:%Y.%m.%d}/${now:%H.%M.%S}_${name}_${task_name}
+    dir: data/outputs/${name}_${now:%Y.%m.%d}/${task_name}_${now:%H.%M.%S}
     subdir: ${hydra.job.num}
