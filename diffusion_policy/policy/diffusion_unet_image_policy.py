@@ -78,6 +78,9 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         if num_inference_steps is None:
             num_inference_steps = noise_scheduler.config.num_train_timesteps
         self.num_inference_steps = num_inference_steps
+
+        print(f"==== prediction_type: {self.noise_scheduler.config.prediction_type}")
+        print(f"==== num_inference_steps: {self.num_inference_steps}")
     
     # ========= inference  ============
     def conditional_sample(self, 

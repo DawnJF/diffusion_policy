@@ -22,6 +22,8 @@ python train.py --config-name=train_diffusion_unet_real_image_workspace name=cub
 
 python train.py --config-name=train_diffusion_unet_real_image_workspace name=cube2bowl tag=pt-sample task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_random_1224+26 policy.noise_scheduler.prediction_type=sample
 
+python train.py --config-name=train_diffusion_unet_real_image_workspace name=cube2bowl tag=pt-sample_no-crop task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_random_1224+26 policy.noise_scheduler.prediction_type=sample policy.obs_encoder.resize_shape=null policy.obs_encoder.crop_shape=null
+
 python train.py --config-name=train_diffusion_unet_real_image_workspace name=bowl task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_1226_bowl
 
 ### deploy
