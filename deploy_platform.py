@@ -138,7 +138,7 @@ class Inference:
         self.obs_list.append(obs)
         print(obs.keys())
 
-        while step_count < 1000:
+        while step_count < 10000:
             with torch.no_grad():
 
                 model_input = self.construct_obs(self.obs_list)
@@ -169,7 +169,7 @@ def main(ckpt_path):
     workspace: BaseWorkspace
     workspace.load_payload(payload, exclude_keys=None, include_keys=None)
 
-    assert "diffusion" in cfg.name
+    print(f"loaded: {cfg.name}")
 
     policy: BaseImagePolicy
     policy = workspace.model
@@ -214,5 +214,27 @@ def test():
 
 
 if __name__ == "__main__":
-    main("/media/robot/30F73268F87D0FEF/Checkpoints/dp/dp_240_checkpoints/150.ckpt")
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0200-train_loss=0.002.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0150-train_loss=0.003.ckpt"
+    # ok
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0300-train_loss=0.001.ckpt"
+    # not good
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0350-train_loss=0.001.ckpt"
+    # overfit
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0450-train_loss=0.000.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_no-crop_16.34.48/checkpoints/epoch=0300-train_loss=0.000.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_no-crop_16.34.48/checkpoints/epoch=0150-train_loss=0.001.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/11.15.44_train_cube2bowl_box_no-crop/checkpoints/epoch=0150-train_loss=0.006.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/11.15.44_train_cube2bowl_box_no-crop/checkpoints/epoch=0350-train_loss=0.002.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/11.15.44_train_cube2bowl_box_no-crop/checkpoints/epoch=0550-train_loss=0.001.ckpt"
+
+    # ok
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/dp_240_checkpoints/300.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/dp_240_checkpoints/550.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/dp_240_checkpoints/150.ckpt"
+
+    # bowl bad
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/240_bowl/epoch=0300-train_loss=0.004.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/240_bowl/epoch=0550-train_loss=0.001.ckpt"
+    main(file)
     # test()
