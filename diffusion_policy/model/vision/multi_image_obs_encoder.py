@@ -6,6 +6,7 @@ import torchvision
 from diffusion_policy.model.vision.crop_randomizer import CropRandomizer
 from diffusion_policy.model.common.module_attr_mixin import ModuleAttrMixin
 from diffusion_policy.common.pytorch_util import dict_apply, replace_submodules
+from diffusion_policy.model.vision.noise_randomizer import ImageAugmentation
 
 
 class MultiImageObsEncoder(ModuleAttrMixin):
@@ -14,6 +15,7 @@ class MultiImageObsEncoder(ModuleAttrMixin):
             rgb_model: Union[nn.Module, Dict[str,nn.Module]],
             resize_shape: Union[Tuple[int,int], Dict[str,tuple], None]=None,
             crop_shape: Union[Tuple[int,int], Dict[str,tuple], None]=None,
+            noise_random: bool=False,
             random_crop: bool=True,
             # replace BatchNorm with GroupNorm
             use_group_norm: bool=False,
@@ -102,13 +104,20 @@ class MultiImageObsEncoder(ModuleAttrMixin):
                         this_normalizer = torchvision.transforms.CenterCrop(
                             size=(h,w)
                         )
+
+                # configure noise randomizer
+                this_noise_randomizer = nn.Identity()
+                if noise_random:
+                    this_noise_randomizer = ImageAugmentation(
+                        zero_prob=0.1, noise_prob=0.1)
+                
                 # configure normalizer
                 this_normalizer = nn.Identity()
                 if imagenet_norm:
                     this_normalizer = torchvision.transforms.Normalize(
                         mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                 
-                this_transform = nn.Sequential(this_resizer, this_randomizer, this_normalizer)
+                this_transform = nn.Sequential(this_resizer, this_randomizer, this_noise_randomizer, this_normalizer)
                 key_transform_map[key] = this_transform
             elif type == 'low_dim':
                 low_dim_keys.append(key)
