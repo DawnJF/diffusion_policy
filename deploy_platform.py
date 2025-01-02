@@ -158,15 +158,13 @@ class Inference:
             print(f"step: {step_count}")
 
 
-def main(ckpt_path):
-
+def load_policy(ckpt_path):
     # load checkpoint
     print(f"load: {ckpt_path}")
     payload = torch.load(open(ckpt_path, "rb"), pickle_module=dill)
     cfg = payload["cfg"]
     cls = hydra.utils.get_class(cfg._target_)
     workspace = cls(cfg)
-    workspace: BaseWorkspace
     workspace.load_payload(payload, exclude_keys=None, include_keys=None)
 
     print(f"loaded: {cfg.name}")
@@ -180,6 +178,11 @@ def main(ckpt_path):
     policy.eval().to(device)
     policy.num_inference_steps = 16  # DDIM inference iterations
     policy.n_action_steps = policy.horizon - policy.n_obs_steps + 1
+
+
+def main(ckpt_path):
+
+    policy = load_policy(ckpt_path)
 
     print("==== model loaded")
     robot = ArmRobot()
