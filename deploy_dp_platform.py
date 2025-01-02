@@ -128,17 +128,20 @@ class Inference:
         # return actions["action"].detach().cpu().numpy()[0]
 
     def step_one(self, action):
-        print("step: ", action.shape)
+        # print("step: ", action.shape)
         self.robot.send_action(action)
 
     def run(self, policy):
+        self.reset = False
         step_count = 0
 
         obs = self.get_obs_dict()
         self.obs_list.append(obs)
-        print(obs.keys())
+        # print(obs.keys())
 
         while step_count < 10000:
+            if self.reset:
+                break
             with torch.no_grad():
 
                 model_input = self.construct_obs(self.obs_list)
@@ -146,7 +149,7 @@ class Inference:
                 actions = policy.predict_action(model_input)
 
             actions = self.filter_actions(actions)
-            print(f"actions: {actions.shape}")
+            # print(f"actions: {actions.shape}")
             for action in actions:
                 self.step_one(action)
                 time.sleep(0.1)
@@ -155,7 +158,13 @@ class Inference:
                 self.obs_list.append(obs)
                 step_count += 1
 
-            print(f"step: {step_count}")
+            # print(f"step: {step_count}")
+
+        if self.reset:
+            self.reset_robot()
+
+    def end_and_reset(self):
+        self.reset = True
 
 
 def load_policy(ckpt_path):
@@ -178,6 +187,7 @@ def load_policy(ckpt_path):
     policy.eval().to(device)
     policy.num_inference_steps = 16  # DDIM inference iterations
     policy.n_action_steps = policy.horizon - policy.n_obs_steps + 1
+    return policy
 
 
 def main(ckpt_path):
@@ -246,6 +256,10 @@ if __name__ == "__main__":
     # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.31/dex_noise_13.24.01/checkpoints/epoch=0400-train_loss=0.006.ckpt"
 
     # ok bowl
-    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0400-train_loss=0.007.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0400-train_loss=0.007.ckpt"
+    file="/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0200-train_loss=0.014.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0250-train_loss=0.014.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0300-train_loss=0.012.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0550-train_loss=0.003.ckpt"
     main(file)
     # test()
