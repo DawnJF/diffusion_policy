@@ -124,7 +124,7 @@ class Inference:
         return data
 
     def filter_actions(self, actions):
-        return actions["action"].detach().cpu().numpy()[0][3::2]
+        return actions["action"].detach().cpu().numpy()[0][2::4]
         # return actions["action"].detach().cpu().numpy()[0]
 
     def step_one(self, action):
@@ -236,5 +236,13 @@ if __name__ == "__main__":
     # bowl bad
     # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/240_bowl/epoch=0300-train_loss=0.004.ckpt"
     # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/240_bowl/epoch=0550-train_loss=0.001.ckpt"
+
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_31_cube2bowl_13.24.01/checkpoints/epoch=0300-train_loss=0.010.ckpt"
+    # # 60
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.31/dex_no-resize_13.24.15/checkpoints/epoch=0400-train_loss=0.006.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.31/dex_noise_13.24.01/checkpoints/epoch=0400-train_loss=0.006.ckpt"
+
+    # ok bowl
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0400-train_loss=0.007.ckpt"
     main(file)
     # test()
