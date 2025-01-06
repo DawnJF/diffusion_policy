@@ -17,7 +17,7 @@ from diffusion_policy.dataset.base_dataset import BaseImageDataset
 from termcolor import cprint
 
 
-class GR1DexDatasetImage(BaseImageDataset):
+class DexDatasetImage(BaseImageDataset):
     def __init__(
         self,
         dataset_path,
@@ -32,7 +32,7 @@ class GR1DexDatasetImage(BaseImageDataset):
         use_depth=False,
     ):
         super().__init__()
-        cprint(f"Loading GR1DexDataset from {dataset_path} horizon:{horizon}", "green")
+        cprint(f"Loading DexDataset from {dataset_path} horizon:{horizon}", "green")
         self.task_name = task_name
         self.use_img = use_img
         self.use_depth = use_depth
@@ -65,7 +65,7 @@ class GR1DexDatasetImage(BaseImageDataset):
         self.horizon = horizon
         self.pad_before = pad_before
         self.pad_after = pad_after
-        cprint(f"Loading GR1DexDataset done", "green")
+        cprint(f"Loading DexDataset done", "green")
 
     def get_validation_dataset(self):
         val_set = copy.copy(self)

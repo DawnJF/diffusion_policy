@@ -24,7 +24,7 @@ shape_meta: &shape_meta
 
 
 dataset:
-  _target_: diffusion_policy.dataset.gr1_dex_dataset_image.GR1DexDatasetImage
+  _target_: diffusion_policy.dataset.dex_dataset_image.DexDatasetImage
   dataset_path: data/box_zarr
   horizon: ${horizon}
   pad_before: ${eval:'${n_obs_steps}-1'}
