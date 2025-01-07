@@ -52,12 +52,12 @@ class Inference:
         self.image_params = {
             "rgb": {
                 "size": (960, 540),
-                "crop": (230, 0, 770, 540),
+                "crop": (280, 0, 820, 540),
                 "resize": (240, 240),
             },
             "wrist": {
                 "size": (640, 480),
-                "crop": (0, 0, 640, 480),
+                "crop": (80, 0, 560, 480),
                 "resize": (240, 240),
             },
             "scene": {
@@ -257,7 +257,7 @@ if __name__ == "__main__":
 
     # ok bowl
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0400-train_loss=0.007.ckpt"
-    file="/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0200-train_loss=0.014.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0200-train_loss=0.014.ckpt"
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0250-train_loss=0.014.ckpt"
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0300-train_loss=0.012.ckpt"
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0550-train_loss=0.003.ckpt"

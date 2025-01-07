@@ -47,6 +47,7 @@ policy:
     resize_shape: [240, 320]
     crop_shape: [216, 288] # ch, cw 240x320 90%
     random_crop: True
+    noise_random: False
     use_group_norm: True
     share_rgb_model: False
     imagenet_norm: True

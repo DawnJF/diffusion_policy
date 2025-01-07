@@ -1,4 +1,8 @@
 ### debug
+source /storage/liujinxin/anaconda3/bin/activate
+conda activate idp3
+cd /storage/liujinxin/code
+
 Python: train old dataset
 
 ### key code
@@ -19,7 +23,9 @@ vision/multi_image_obs_encoder.py
 python train.py --config-name=train_diffusion_unet_real_image_workspace name=cube2bowl task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_random_1224+26
 
 `ok`
-python train.py --config-name=train_diffusion_unet_real_image_workspace name=cube2bowl tag=no-resize task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_random_1224+26 policy.obs_encoder.resize_shape=null policy.obs_encoder.crop_shape=[228,228]
+python train.py --config-name=train_diffusion_unet_real_image_workspace name=take_all tag=c230 task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/0107_take_all policy.obs_encoder.resize_shape=null policy.obs_encoder.crop_shape=[230,230]
+
+python train.py --config-name=train_diffusion_unet_real_image_workspace name=take_all tag=c230-noise task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/0107_take_all policy.obs_encoder.resize_shape=null policy.obs_encoder.crop_shape=[230,230] policy.obs_encoder.noise_random=True
 
 python train.py --config-name=train_diffusion_unet_real_image_workspace name=cube2bowl tag=pt-sample task.dataset.dataset_path=/storage/liujinxin/code/ArmRobot/dataset/train_data/240_random_1224+26 policy.noise_scheduler.prediction_type=sample
 
