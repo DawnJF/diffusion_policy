@@ -52,7 +52,7 @@ class Inference:
         self.image_params = {
             "rgb": {
                 "size": (960, 540),
-                "crop": (280, 0, 820, 540),
+                "crop": (230, 0, 770, 540),
                 "resize": (240, 240),
             },
             "wrist": {
