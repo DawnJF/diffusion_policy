@@ -13,10 +13,12 @@ env_path = "/home/robot/UR_Robot_Arm_Show/tele_ws/src/tele_ctrl_jeff/scripts/"
 sys.path.append(env_path)
 from inference import InferenceEnv
 
+sys.path.append("/home/robot/UR_Robot_Arm_Show")
+from utils.arm_robot import ArmRobot
+from utils.dataset_playback import send_action_by_p2v
 
 sys.path.append("/home/robot/ArmRobot")
 from observation.Image_process_utils import process_image_npy
-from hardware.arm_robot import ArmRobot
 
 
 class Inference:
@@ -68,15 +70,16 @@ class Inference:
         }
 
     def reset_robot(self):
+        print("reset_robot")
 
         action = [
-            -0.18980697676771513,
-            -0.3827291399992533,
-            0.31114132703422326,
-            -0.417985318626756,
-            -0.9083933376685246,
-            0.008868446494732254,
-            0.005582844140526736,
+            -0.1897960292037411,
+            -0.38273282360124394,
+            0.4351520715693574,
+            0.4165155311323526,
+            0.9091285998773582,
+            3.390982377428181e-05,
+            7.790528867994886e-06,
             0.0,
         ]
         self.robot.init_action(action)
@@ -129,6 +132,12 @@ class Inference:
 
     def step_one(self, action):
         # print("step: ", action.shape)
+
+        # state = self.robot.get_state()
+        # action[0] += state[0]
+        # action[1] += state[1]
+        # action[2] += state[2]
+
         self.robot.send_action(action)
 
     def run(self, policy):
@@ -150,9 +159,13 @@ class Inference:
 
             actions = self.filter_actions(actions)
             # print(f"actions: {actions.shape}")
+            # send_action_by_p2v(actions, self.robot, 20)
+            # obs = self.get_obs_dict()
+            # self.obs_list.append(obs)
+            # self.obs_list.append(obs)
             for action in actions:
                 self.step_one(action)
-                time.sleep(0.1)
+                time.sleep(0.04)
 
                 obs = self.get_obs_dict()
                 self.obs_list.append(obs)
@@ -226,7 +239,18 @@ def test():
     env.run(None)
 
 
-if __name__ == "__main__":
+def test_env():
+    args = {"fps": 20, "visualize": False, "path": ""}
+
+    collector = InferenceEnv(args)
+    time.sleep(2)
+    for i in range(10):
+        data = collector.get_state_obs()
+        print(data.keys())
+        time.sleep(1)
+
+
+def test01():
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0200-train_loss=0.002.ckpt"
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/cube2bowl_2024.12.28/dex_pt-sample_08.04.33/checkpoints/epoch=0150-train_loss=0.003.ckpt"
     # ok
@@ -263,3 +287,35 @@ if __name__ == "__main__":
     file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/bowl_2024.12.31/dex_exp_10.11.20/checkpoints/epoch=0550-train_loss=0.003.ckpt"
     main(file)
     # test()
+
+
+def test02():
+    # ok
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/take_all_2025.01.09/epoch=0400-train_loss=0.004.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/take_all_2025.01.09/noise/epoch=0400-train_loss=0.007.ckpt"
+
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/take_all_2025.01.09/open/epoch=0400-train_loss=0.015.ckpt"
+
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/take_all_2025.01.09/open_take/epoch=0400-train_loss=0.004.ckpt"
+    main(file)
+
+
+def test03():
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/open/epoch=0400-train_loss=0.026.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/bell/epoch=0400-train_loss=0.040.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/mm/epoch=0400-train_loss=0.044.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/kele/epoch=0400-train_loss=0.040.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/ship/epoch=0400-train_loss=0.032.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/snake/epoch=0400-train_loss=0.040.ckpt"
+    # file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/persimmon/epoch=0400-train_loss=0.037.ckpt"
+    main(file)
+
+
+def test03_():
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/open/epoch=0400-train_loss=0.026.ckpt"
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/bell/epoch=0400-train_loss=0.040.ckpt"
+    main(file)
+
+
+if __name__ == "__main__":
+    test03_()
