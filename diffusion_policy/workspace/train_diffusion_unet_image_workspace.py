@@ -143,7 +143,6 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
             cfg.training.num_epochs = 2
             cfg.training.max_train_steps = 3
             cfg.training.max_val_steps = 3
-            cfg.training.rollout_every = 1
             cfg.training.checkpoint_every = 1
             cfg.training.val_every = 1
             cfg.training.sample_every = 1
@@ -215,11 +214,6 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
                     policy = self.ema_model
                 policy.eval()
 
-                # run rollout
-                # if (self.epoch % cfg.training.rollout_every) == 0:
-                #     runner_log = env_runner.run(policy)
-                #     # log all
-                #     step_log.update(runner_log)
 
                 # run validation
                 if (self.epoch % cfg.training.val_every) == 0:
