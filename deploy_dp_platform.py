@@ -128,16 +128,27 @@ class Inference:
         return data
 
     def filter_actions(self, actions):
-        return actions["action"].detach().cpu().numpy()[0][2::4]
-        # return actions["action"].detach().cpu().numpy()[0]
+        # actions = actions["action"].detach().cpu().numpy()[0]
+        actions = actions["action"].detach().cpu().numpy()[0][2::4]
 
-    def step_one(self, action):
-        # print("step: ", action.shape)
-
+        """
+        diff
+        """
         # state = self.robot.get_state()
+        # action = actions[0]
         # action[0] += state[0]
         # action[1] += state[1]
         # action[2] += state[2]
+        # for i in range(1, len(actions)):
+        #     actions[i][0] += actions[i - 1][0]
+        #     actions[i][1] += actions[i - 1][1]
+        #     actions[i][2] += actions[i - 1][2]
+
+        return actions
+
+    def step_one(self, action):
+        # print("step: ", action.shape)
+        # print(action[:3])
 
         self.robot.send_action(action)
 
@@ -159,8 +170,8 @@ class Inference:
                 actions = policy.predict_action(model_input)
 
             actions = self.filter_actions(actions)
-            # print(f"actions: {actions.shape}")
-            # send_action_by_p2v(actions, self.robot, 20)
+
+            # self.obs_env.send_path(actions, self.robot)
             # obs = self.get_obs_dict()
             # self.obs_list.append(obs)
             # self.obs_list.append(obs)
@@ -345,5 +356,15 @@ def test03_():
     main(file)
 
 
+def test04():
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/dex_c230_diff_12.05.58/epoch=0400-train_loss=0.005.ckpt"
+    main(file)
+
+
+def test05():
+    file = "/media/robot/30F73268F87D0FEF/Checkpoints/dp/demo_2025.01.14/open/epoch=0400-train_loss=0.026.ckpt"
+    main(file)
+
+
 if __name__ == "__main__":
-    test03_()
+    test05()
