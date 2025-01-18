@@ -68,6 +68,7 @@ class Inference:
                 "resize": (240, 240),
             },
         }
+        self.loop_policy = None
 
     def reset_robot(self):
         print("reset_robot")
@@ -176,8 +177,35 @@ class Inference:
         if self.reset:
             self.reset_robot()
 
-    def end_and_reset(self):
-        self.reset = True
+    def run_loop(self):
+        self.reset = False
+        step_count = 0
+
+        obs = self.get_obs_dict()
+        self.obs_list.append(obs)
+
+        while step_count < 10000:
+            if self.reset:
+                self.reset = False
+                self.reset_robot()
+
+            if self.loop_policy is None:
+                time.sleep(1)
+                continue
+
+            with torch.no_grad():
+
+                model_input = self.construct_obs(self.obs_list)
+
+                actions = self.loop_policy.predict_action(model_input)
+
+            actions = self.filter_actions(actions)
+            for action in actions:
+                self.step_one(action)
+
+                obs = self.get_obs_dict()
+                self.obs_list.append(obs)
+                step_count += 1
 
 
 def load_policy(ckpt_path):
