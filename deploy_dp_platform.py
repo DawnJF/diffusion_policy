@@ -85,7 +85,7 @@ class Inference:
         ]
         self.robot.init_action(action)
 
-        self.obs_list = []
+        self.obs_list = [self.get_obs_dict()]
 
     def construct_obs(self, obs_list):
 
